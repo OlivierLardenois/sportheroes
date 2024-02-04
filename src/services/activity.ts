@@ -1,13 +1,27 @@
+import ActivityRepo from "../repositories/activity";
 import Activity from "../utils/activity";
 
 export const MAX_RUNNING_SPEED = 18000;
 export const MAX_CYCLING_SPEED = 50000;
 
 export default class ActivityService {
-  constructor() {}
+  activityRepo: ActivityRepo;
+  constructor() {
+    this.activityRepo = new ActivityRepo();
+  }
 
   saveActivity(activity: Activity) {
-    this.isValid(activity);
+    const isValid = this.isValid(activity);
+    this.activityRepo.save({
+      climb: activity.climb,
+      date: activity.date,
+      distance: activity.distance,
+      duration: activity.duration,
+      isValid,
+      provider: activity.provider,
+      sport: activity.sport,
+      userId: activity.userId,
+    });
   }
 
   isValid(activity: Activity): boolean {

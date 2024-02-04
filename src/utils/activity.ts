@@ -36,6 +36,8 @@ export default class Activity {
   distance: number;
   duration: number;
   climb: number;
+  date: Date;
+  userId: string;
 
   constructor({ providerName, providerActivity }: ProviderActivity) {
     switch (providerName) {
@@ -45,6 +47,8 @@ export default class Activity {
         this.distance = providerActivity.distance;
         this.duration = providerActivity.duration * 1000;
         this.climb = providerActivity.climb;
+        this.date = new Date(providerActivity.date);
+        this.userId = providerActivity.distinct_id;
         break;
       case "SUUNTO":
         this.provider = "SUUNTO";
@@ -52,6 +56,8 @@ export default class Activity {
         this.distance = providerActivity.distance * 1000;
         this.duration = providerActivity.duration;
         this.climb = 0;
+        this.date = new Date(providerActivity.timestamp);
+        this.userId = providerActivity.user_id;
         break;
       default:
         throw new Error("");

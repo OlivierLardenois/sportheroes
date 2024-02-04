@@ -56,6 +56,8 @@ describe("Activity", () => {
     expect(activity.distance).toBe(distance);
     expect(activity.duration).toBe(duration * 1000);
     expect(activity.climb).toBe(activity.climb);
+    expect(activity.date).toEqual(date);
+    expect(activity.userId).toEqual(distinct_id);
 
     garminSportMapperMock.mockRestore();
   });
@@ -74,7 +76,7 @@ describe("Activity", () => {
         distance,
         duration,
         user_id: distinct_id,
-        timestamp: 1707058884,
+        timestamp: 1707058884000,
       },
     });
     expect(activity).toBeDefined();
@@ -83,6 +85,8 @@ describe("Activity", () => {
     expect(activity.distance).toBe(distance * 1000);
     expect(activity.duration).toBe(duration);
     expect(activity.climb).toBe(0);
+    expect(activity.date).toEqual(new Date(1707058884000));
+    expect(activity.userId).toEqual(distinct_id);
 
     suuntoSportMapperMock.mockRestore();
   });

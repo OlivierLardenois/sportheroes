@@ -13,6 +13,8 @@ describe("ActivityService.isValidRunning", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport,
+      date: new Date(),
+      userId: "1",
     });
 
     expect(isValid).toBe(true);
@@ -25,6 +27,8 @@ describe("ActivityService.isValidRunning", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport,
+      date: new Date(),
+      userId: "1",
     });
 
     expect(isValid).toBe(false);
@@ -41,6 +45,8 @@ describe("ActivityService.isValidCycling", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport,
+      date: new Date(),
+      userId: "1",
     });
 
     expect(isValid).toBe(true);
@@ -53,6 +59,8 @@ describe("ActivityService.isValidCycling", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport,
+      date: new Date(),
+      userId: "1",
     });
 
     expect(isValid).toBe(false);
@@ -73,6 +81,8 @@ describe("ActivityService.isValid", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport: "RUNNING",
+      date: new Date(),
+      userId: "1",
     };
     const activityService = new ActivityService();
     activityService.isValid(activity);
@@ -93,6 +103,8 @@ describe("ActivityService.isValid", () => {
       duration: 3_600_000,
       provider: "GARMIN",
       sport: "CYCLING",
+      date: new Date(),
+      userId: "1",
     };
     const activityService = new ActivityService();
     activityService.isValid(activity);
