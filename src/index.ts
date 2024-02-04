@@ -23,8 +23,8 @@ router.post("/activity/:provider", koaBody(), async (ctx, next) => {
         ctx.status = 409;
         return next();
       }
-      if (err.message == "UNKNOWN_PROVIDER") {
-        ctx.body = "UNKNOWN_PROVIDER";
+      if (["UNKNOWN_PROVIDER", "UNKNOWN_SPORT"].includes(err.message)) {
+        ctx.body = err.message;
         ctx.status = 501;
         return next();
       }

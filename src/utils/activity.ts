@@ -9,7 +9,7 @@ type GarminActivity = {
   duration: number; // In seconds
   climb: number;
   distinct_id: string;
-  date: Date;
+  date: string;
 };
 
 type SuuntoActivity = {
@@ -75,7 +75,8 @@ export default class Activity {
       case "INDOOR_CYCLING":
         return "CYCLING";
       default:
-        throw new Error("");
+        console.warn("Sport not supported :", sport);
+        throw new Error("UNKNOWN_SPORT");
     }
   }
 
@@ -87,7 +88,8 @@ export default class Activity {
       case "Biking":
         return "CYCLING";
       default:
-        throw new Error("");
+        console.warn("Sport not supported :", sport);
+        throw new Error("UNKNOWN_SPORT");
     }
   }
 }
