@@ -11,6 +11,7 @@ export default class ActivityService {
     this.activityRepo = new ActivityRepo();
   }
 
+  /** Check activity is compliant with rules and save it to DB */
   async saveActivity(activity: Activity) {
     const isValid = this.isValid(activity);
 
@@ -37,6 +38,7 @@ export default class ActivityService {
     });
   }
 
+  /** Check the given activity is compliant with max_speed */
   isValid(activity: Activity): boolean {
     switch (activity.sport) {
       case "CYCLING":

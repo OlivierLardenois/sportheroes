@@ -30,6 +30,7 @@ type ProviderActivity =
       providerActivity: SuuntoActivity;
     };
 
+/** Format different providers activity */
 export default class Activity {
   provider: ProviderName;
   sport: Sport;
