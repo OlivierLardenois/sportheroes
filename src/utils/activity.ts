@@ -1,4 +1,4 @@
-type ProviderName = "GARMIN" | "SUUNTO";
+export type ProviderName = "GARMIN" | "SUUNTO";
 export type Sport = "RUNNING" | "CYCLING";
 export type GarminSport = "Run" | "Spinning" | "Biking";
 export type SuuntoSport = "TRAIL" | "RUNNING" | "INDOOR_CYCLING" | "BIKE";
