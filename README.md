@@ -19,3 +19,4 @@ Le dossier repositories va gérer tout ce qui est call DB
 * Meilleur system de log (avec genre winston)
 * Meilleure gestion d'erreur : création de class d'erreurs spécifiques
 * Regarder pour mettre les types au même endroit, pour le moment ils sont un quasi tous dans utils/activity.ts 
+* je n'ai pas eu le temps de créer une fonction pour check les inputs. Donc il faudrait créer "checkActivityInput" qui vient check le typage des donneés des activités : distance/duration/climb doivent être des numbers, date une string valide.
