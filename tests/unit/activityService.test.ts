@@ -112,3 +112,75 @@ describe("ActivityService.isValid", () => {
     expect(isValidCyclingMock).toHaveBeenCalledWith(activity);
   });
 });
+
+const mockFindByUserInPeriod = jest
+  .fn()
+  .mockResolvedValueOnce(true)
+  .mockResolvedValueOnce(false);
+const mockSave = jest.fn();
+jest.mock("../../src/repositories/activity.ts", () => {
+  return jest.fn().mockImplementation(() => {
+    return {
+      findByUserInPeriod: mockFindByUserInPeriod,
+      save: mockSave,
+    };
+  });
+});
+
+describe("ActivityService.saveActivity", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should throw on conflicting activity", async () => {
+    const isValidMock = jest.spyOn(ActivityService.prototype, "isValid");
+    isValidMock.mockReturnValue(true);
+
+    const activity: Activity = {
+      climb: 0,
+      distance: 51_000,
+      duration: 3_600_000,
+      provider: "GARMIN",
+      sport: "CYCLING",
+      date: new Date(),
+      userId: "1",
+    };
+    const activityService = new ActivityService();
+    expect(activityService.saveActivity(activity)).rejects.toThrow(
+      "CONFLICTING_ACTIVITY",
+    );
+
+    expect(isValidMock).toHaveBeenCalledWith(activity);
+    expect(mockFindByUserInPeriod).toHaveBeenCalledTimes(1);
+  });
+
+  it("should save activity", async () => {
+    const isValidMock = jest.spyOn(ActivityService.prototype, "isValid");
+    isValidMock.mockReturnValue(true);
+
+    const activity: Activity = {
+      climb: 0,
+      distance: 51_000,
+      duration: 3_600_000,
+      provider: "GARMIN",
+      sport: "CYCLING",
+      date: new Date(),
+      userId: "1",
+    };
+    const activityService = new ActivityService();
+    await activityService.saveActivity(activity);
+
+    expect(isValidMock).toHaveBeenCalledWith(activity);
+    expect(mockFindByUserInPeriod).toHaveBeenCalledTimes(1);
+    expect(mockSave).toHaveBeenCalledWith({
+      climb: activity.climb,
+      date: activity.date,
+      distance: activity.distance,
+      duration: activity.duration,
+      isValid: true,
+      provider: activity.provider,
+      sport: activity.sport,
+      userId: activity.userId,
+    });
+  });
+});

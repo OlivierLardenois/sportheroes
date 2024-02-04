@@ -33,8 +33,8 @@ type ProviderActivity =
 export default class Activity {
   provider: ProviderName;
   sport: Sport;
-  distance: number;
-  duration: number;
+  distance: number; // In meters
+  duration: number; // In milliseconds
   climb: number;
   date: Date;
   userId: string;
@@ -60,7 +60,8 @@ export default class Activity {
         this.userId = providerActivity.user_id;
         break;
       default:
-        throw new Error("");
+        console.warn("Provider not supported :", providerName);
+        throw new Error("UNKNOWN_PROVIDER");
     }
   }
 

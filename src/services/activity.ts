@@ -6,13 +6,26 @@ export const MAX_CYCLING_SPEED = 50000;
 
 export default class ActivityService {
   activityRepo: ActivityRepo;
+
   constructor() {
     this.activityRepo = new ActivityRepo();
   }
 
-  saveActivity(activity: Activity) {
+  async saveActivity(activity: Activity) {
     const isValid = this.isValid(activity);
-    this.activityRepo.save({
+
+    const existinActivity = await this.activityRepo.findByUserInPeriod({
+      userId: activity.userId,
+      startingDate: activity.date,
+      // endingDate is the starting date + the duration of the activity
+      endingDate: new Date(activity.date.getTime() + activity.duration),
+    });
+    if (existinActivity) {
+      console.warn("An activity already exist at this date");
+      throw new Error("CONFLICTING_ACTIVITY");
+    }
+
+    return this.activityRepo.save({
       climb: activity.climb,
       date: activity.date,
       distance: activity.distance,
